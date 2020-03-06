@@ -1,37 +1,39 @@
 package com.example.projcalccarbono;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
-import android.content.res.ColorStateList;
 import android.os.Bundle;
-import android.view.MenuItem;
-import android.widget.ArrayAdapter;
-import android.widget.Spinner;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 
-public class MainActivity extends AppCompatActivity {
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
+import android.view.MenuItem;
+import android.view.View;
+
+public class Atitudes extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_atitudes2);
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.nav_view);
 
-        bottomNavigationView.setSelectedItemId(R.id.calcMensal);
+        bottomNavigationView.setSelectedItemId(R.id.atitudes);
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
+                    case R.id.calcMensal:
+                        openActivityCalcMensal();
+                        break;
                     case R.id.calcDiario:
                         openActivityCalcDiario();
-                        break;
-                    case R.id.atitudes:
-                        openActivityAtitudes();
                         break;
                 }
                 return false;
@@ -39,13 +41,13 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public void openActivityCalcDiario(){
-        Intent intent = new Intent(this, CalcDiario.class);
+    public void openActivityCalcMensal(){
+        Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
 
-    public void openActivityAtitudes(){
-        Intent intent = new Intent(this, Atitudes.class);
+    public void openActivityCalcDiario(){
+        Intent intent = new Intent(this, CalcDiario.class);
         startActivity(intent);
     }
 }

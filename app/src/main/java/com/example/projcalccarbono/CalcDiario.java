@@ -4,31 +4,28 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.widget.ArrayAdapter;
-import android.widget.Spinner;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class MainActivity extends AppCompatActivity {
+public class CalcDiario extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_calc_diario);
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.nav_view);
 
-        bottomNavigationView.setSelectedItemId(R.id.calcMensal);
+        bottomNavigationView.setSelectedItemId(R.id.calcDiario);
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
-                    case R.id.calcDiario:
-                        openActivityCalcDiario();
+                    case R.id.calcMensal:
+                        openActivityCalcMensal();
                         break;
                     case R.id.atitudes:
                         openActivityAtitudes();
@@ -39,8 +36,8 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public void openActivityCalcDiario(){
-        Intent intent = new Intent(this, CalcDiario.class);
+    public void openActivityCalcMensal(){
+        Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
 

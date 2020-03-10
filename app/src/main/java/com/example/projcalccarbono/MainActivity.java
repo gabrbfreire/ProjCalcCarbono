@@ -2,13 +2,10 @@ package com.example.projcalccarbono;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
-import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.widget.ArrayAdapter;
-import android.widget.Spinner;
+
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -48,4 +45,7 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, Atitudes.class);
         startActivity(intent);
     }
+
+
+
 }

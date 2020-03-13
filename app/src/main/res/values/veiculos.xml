@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="vehicles">
+        <item>Carro</item>
+        <item>Moto</item>
+        <item>Onibus</item>
+        <item>Metro</item>
+        <item>Bicicleta</item>
+        <item>A pé</item>
+    </string-array>
+</resources>

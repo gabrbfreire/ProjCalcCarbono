@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.widget.Toast;
+
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.warkiz.widget.IndicatorSeekBar;
 
@@ -16,7 +16,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        IndicatorSeekBar seekBar = findViewById(R.id.seekBar3);
+        IndicatorSeekBar seekBar = findViewById(R.id.seekBarCasa);
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.nav_view);
 

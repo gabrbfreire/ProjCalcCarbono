@@ -11,6 +11,7 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Looper;
 import android.provider.Settings;
 import android.view.MenuItem;
@@ -27,11 +28,15 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.util.ArrayList;
+
 public class CalcDiario extends AppCompatActivity {
 
     int PERMISSION_ID = 44;
     FusedLocationProviderClient mFusedLocationClient;
     TextView textView1, textView2;
+    ArrayList<Double> latitudes = new ArrayList<Double>();
+    ArrayList<Double> longitudes = new ArrayList<Double>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,15 +66,30 @@ public class CalcDiario extends AppCompatActivity {
         textView2 = findViewById(R.id.textView2);
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
-        getLastLocation();
 
-        Spinner spinner = findViewById(R.id.spinner);
-        // Create an ArrayAdapter using the string array and a default spinner layout
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.vehicles, android.R.layout.simple_spinner_item);
-        // Specify the layout to use when the list of choices appears
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        // Apply the adapter to the spinner
-        spinner.setAdapter(adapter);
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                getLastLocation();
+
+
+
+                handler.postDelayed(this, 2000);
+            }
+        }, 1);
+
+
+
+
+
+//        Spinner spinner = findViewById(R.id.spinner);
+//        Create an ArrayAdapter using the string array and a default spinner layout;
+//        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.vehicles, android.R.layout.simple_spinner_item);
+//        Specify the layout to use when the list of choices appears;
+//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        Apply the adapter to the spinner
+//        spinner.setAdapter(adapter);
 
     }
 
@@ -95,8 +115,28 @@ public class CalcDiario extends AppCompatActivity {
                                 if (location == null) {
                                     requestNewLocationData();
                                 } else {
-                                    //textView1.setText(location.getLatitude()+"");
-                                    //textView2.setText(location.getLongitude()+"");
+                                    latitudes.add(location.getLatitude());
+                                    longitudes.add(location.getLongitude());
+
+
+                                    textView1.setText(location.getLatitude()+"");
+                                    textView2.setText(location.getLongitude()+"");
+
+                                    StringBuffer sb = new StringBuffer();
+
+                                    for (Double s : latitudes) {
+                                        sb.append(s);
+                                        sb.append(" ");
+                                    }
+
+                                    String str = latitudes.toString();
+
+                                    Context context = getApplicationContext();
+                                    CharSequence text = str;
+                                    int duration = Toast.LENGTH_SHORT;
+
+                                    Toast toast = Toast.makeText(context, text, duration);
+                                    toast.show();
                                 }
                             }
                         }
@@ -175,8 +215,27 @@ public class CalcDiario extends AppCompatActivity {
     public void onResume(){
         super.onResume();
         if (checkPermissions()) {
-            getLastLocation();
+            //getLastLocation();
         }
 
+    }
+
+    public double calcDist(){
+        double d = 0;
+
+        for(int i = 0;i < latitudes.size(); i++) {
+            double R = 6371e3; // metres
+            double φ1 = Math.toRadians(latitudes.get(i));
+            double φ2 = Math.toRadians(latitudes.get(i + 1));
+            double Δφ = Math.toRadians(latitudes.get(i + 1) - latitudes.get(i));
+            double Δλ = Math.toRadians(latitudes.get(i + 1) - latitudes.get(i));
+
+            double a = Math.sin(Δφ / 2) * Math.sin(Δφ / 2) + Math.cos(φ1) * Math.cos(φ2) * Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
+            double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+            d = d + (R * c);
+        }
+
+        return d;
     }
 }

@@ -60,7 +60,7 @@
 
                 <TextView
                     android:id="@+id/textView8"
-                    android:layout_width="71dp"
+                    android:layout_width="94dp"
                     android:layout_height="45dp"
                     android:layout_marginTop="8dp"
                     android:text="x km"

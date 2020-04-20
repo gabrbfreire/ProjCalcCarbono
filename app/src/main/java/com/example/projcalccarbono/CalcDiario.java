@@ -34,7 +34,7 @@ public class CalcDiario extends AppCompatActivity {
 
     int PERMISSION_ID = 44;
     FusedLocationProviderClient mFusedLocationClient;
-    TextView textView1, textView2;
+    TextView textView1, textView2, textView8;
     ArrayList<Double> latitudes = new ArrayList<Double>();
     ArrayList<Double> longitudes = new ArrayList<Double>();
 
@@ -64,6 +64,7 @@ public class CalcDiario extends AppCompatActivity {
 
         textView1 = findViewById(R.id.textView1);
         textView2 = findViewById(R.id.textView2);
+        textView8 = findViewById(R.id.textView8);
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
 
@@ -73,23 +74,19 @@ public class CalcDiario extends AppCompatActivity {
             public void run() {
                 getLastLocation();
 
-
-
                 handler.postDelayed(this, 2000);
             }
         }, 1);
 
 
 
-
-
-//        Spinner spinner = findViewById(R.id.spinner);
-//        Create an ArrayAdapter using the string array and a default spinner layout;
-//        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.vehicles, android.R.layout.simple_spinner_item);
-//        Specify the layout to use when the list of choices appears;
-//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//        Apply the adapter to the spinner
-//        spinner.setAdapter(adapter);
+        Spinner spinner = findViewById(R.id.spinner);
+        //Create an ArrayAdapter using the string array and a default spinner layout;
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.vehicles, android.R.layout.simple_spinner_item);
+        //Specify the layout to use when the list of choices appears;
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        //Apply the adapter to the spinner
+        spinner.setAdapter(adapter);
 
     }
 
@@ -119,8 +116,8 @@ public class CalcDiario extends AppCompatActivity {
                                     longitudes.add(location.getLongitude());
 
 
-                                    textView1.setText(location.getLatitude()+"");
-                                    textView2.setText(location.getLongitude()+"");
+//                                    textView1.setText(location.getLatitude()+"");
+//                                    textView2.setText(location.getLongitude()+"");
 
                                     StringBuffer sb = new StringBuffer();
 
@@ -129,10 +126,13 @@ public class CalcDiario extends AppCompatActivity {
                                         sb.append(" ");
                                     }
 
-                                    String str = latitudes.toString();
+
+                                    Double str = calcDist();
+
+                                    textView8.setText(str+" km");
 
                                     Context context = getApplicationContext();
-                                    CharSequence text = str;
+                                    CharSequence text = str.toString();
                                     int duration = Toast.LENGTH_SHORT;
 
                                     Toast toast = Toast.makeText(context, text, duration);
@@ -221,21 +221,24 @@ public class CalcDiario extends AppCompatActivity {
     }
 
     public double calcDist(){
-        double d = 0;
+        if(latitudes.size()>5) {
+            double d = 0;
 
-        for(int i = 0;i < latitudes.size(); i++) {
-            double R = 6371e3; // metres
-            double φ1 = Math.toRadians(latitudes.get(i));
-            double φ2 = Math.toRadians(latitudes.get(i + 1));
-            double Δφ = Math.toRadians(latitudes.get(i + 1) - latitudes.get(i));
-            double Δλ = Math.toRadians(latitudes.get(i + 1) - latitudes.get(i));
+            for (int i = 0; i < latitudes.size()-1; i++) {
+                double R = 6371e3; // metres
+                double φ1 = Math.toRadians(latitudes.get(i));
+                double φ2 = Math.toRadians(latitudes.get(i + 1));
+                double Δφ = Math.toRadians(latitudes.get(i + 1) - latitudes.get(i));
+                double Δλ = Math.toRadians(latitudes.get(i + 1) - latitudes.get(i));
 
-            double a = Math.sin(Δφ / 2) * Math.sin(Δφ / 2) + Math.cos(φ1) * Math.cos(φ2) * Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
-            double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+                double a = Math.sin(Δφ / 2) * Math.sin(Δφ / 2) + Math.cos(φ1) * Math.cos(φ2) * Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
+                double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
-            d = d + (R * c);
+                d = d + (R * c);
+            }
+            return d;
+        }else{
+            return 1;
         }
-
-        return d;
     }
 }

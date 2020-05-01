@@ -6,12 +6,7 @@
         android:title="Cálculo diário"/>
 
     <item
-        android:id="@+id/calcMensal"
-        android:icon="@drawable/ic_android_black_24dp"
-        android:title="Cálculo mensal"/>
-
-    <item
         android:id="@+id/atitudes"
         android:icon="@drawable/ic_android_black_24dp"
-        android:title="Atitudes"/>
+        android:title="Orientações" />
 </menu>

@@ -4,6 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import android.Manifest;
+import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -15,25 +17,32 @@ import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
+import com.google.android.gms.location.ActivityRecognitionClient;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import java.util.ArrayList;
 
-public class CalcDiario extends AppCompatActivity {
+public class CalcDiario extends AppCompatActivity{
 
     int PERMISSION_ID = 44;
+
+    private ActivityRecognitionClient activityRecognitionClient;
+    private PendingIntent pIntent;
+    private BroadcastReceiver receiver;
+
     FusedLocationProviderClient mFusedLocationClient;
-    TextView textView1, textView2, textView8;
+    TextView textView1, textView2, textView8, textView;
     ArrayList<Double> latitudes = new ArrayList<Double>();
     ArrayList<Double> longitudes = new ArrayList<Double>();
     LocationManager locationManager;
     LocationListener locationListener;
     Double distTotal = 0.0;
+    Spinner spinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calc_diario);
 
@@ -56,8 +65,9 @@ public class CalcDiario extends AppCompatActivity {
         textView1 = findViewById(R.id.textView1);
         textView2 = findViewById(R.id.textView2);
         textView8 = findViewById(R.id.textView8);
+        textView = findViewById(R.id.textView);
+        spinner = findViewById(R.id.spinner1);
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
-
 
         final Context context = getApplicationContext();
 
@@ -71,6 +81,13 @@ public class CalcDiario extends AppCompatActivity {
                 Double distPontos = calcDist();
                 distTotal = distTotal + distPontos;
                 textView8.setText(String.format("%.3f", distTotal)+" km");
+                if(spinner.getSelectedItem().equals("Carro")){
+                    textView.setText(String.format("%.3f", distTotal*190)+" g CO2");
+                }else if(spinner.getSelectedItem().equals("Moto")){
+                    textView.setText(String.format("%.3f", distTotal*70)+" g CO2");
+                }else{
+                    textView.setText(String.format("%.3f", distTotal*0)+" g CO2");
+                }
 
 //                CharSequence text = location.getLatitude() + "";
 //                int duration = Toast.LENGTH_SHORT;
@@ -93,6 +110,8 @@ public class CalcDiario extends AppCompatActivity {
             public void onProviderDisabled(String provider) {
 
             }
+
+
         };
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -105,7 +124,7 @@ public class CalcDiario extends AppCompatActivity {
 
         locationManager.requestLocationUpdates("gps", 5000, 5, locationListener); /////
 
-        Spinner spinner = findViewById(R.id.spinner);
+
         //Create an ArrayAdapter using the string array and a default spinner layout;
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.vehicles, android.R.layout.simple_spinner_item);
         //Specify the layout to use when the list of choices appears;

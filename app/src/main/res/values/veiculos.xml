@@ -3,7 +3,6 @@
     <string-array name="vehicles">
         <item>Carro</item>
         <item>Moto</item>
-        <item>Onibus</item>
         <item>Bicicleta</item>
         <item>A pé</item>
     </string-array>

@@ -13,12 +13,28 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        openActivityCalcDiario();
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.nav_view);
+
+        bottomNavigationView.setSelectedItemId(R.id.calcMensal);
+
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.calcDiario:
+                        openActivityCalcDiario();
+                        break;
+                    case R.id.atitudes:
+                        openActivityAtitudes();
+                        break;
+                }
+                return false;
+            }
+        });
     }
 
     public void openActivityCalcDiario(){
@@ -26,5 +42,9 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void openActivityAtitudes(){
+        Intent intent = new Intent(this, Atitudes.class);
+        startActivity(intent);
+    }
 
 }

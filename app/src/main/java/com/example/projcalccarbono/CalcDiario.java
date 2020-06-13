@@ -57,6 +57,9 @@ public class CalcDiario extends AppCompatActivity{
                     case R.id.atitudes:
                         openActivityAtitudes();
                         break;
+                    case R.id.calcMensal:
+                        openActivityCalcMensal();
+                        break;
                 }
                 return false;
             }

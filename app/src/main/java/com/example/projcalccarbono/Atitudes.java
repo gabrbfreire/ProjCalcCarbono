@@ -32,6 +32,9 @@ public class Atitudes extends AppCompatActivity {
                     case R.id.calcDiario:
                         openActivityCalcDiario();
                         break;
+                    case R.id.calcMensal:
+                        openActivityCalcMensal();
+                        break;
                 }
                 return false;
             }

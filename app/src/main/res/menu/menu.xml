@@ -3,15 +3,14 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/calcDiario"
-        android:icon="@drawable/ic_android_black_24dp"
-        android:title="Cálculo diário"/>
-
-    <item
-        android:id="@+id/atitudes"
-        android:icon="@drawable/ic_android_black_24dp"
-        android:title="Orientações" />
+        android:icon="@android:drawable/ic_menu_day"
+        android:title="Cálculo diário" />
     <item
         android:id="@+id/calcMensal"
-        android:icon="@drawable/ic_android_black_24dp"
+        android:icon="@android:drawable/ic_menu_month"
         android:title="Cálculo Mensal" />
+    <item
+        android:id="@+id/atitudes"
+        android:icon="@android:drawable/ic_menu_mapmode"
+        android:title="Orientações" />
 </menu>

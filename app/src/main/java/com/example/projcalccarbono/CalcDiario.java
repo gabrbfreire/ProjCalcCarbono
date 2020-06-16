@@ -38,6 +38,7 @@ public class CalcDiario extends AppCompatActivity{
     LocationManager locationManager;
     LocationListener locationListener;
     Double distTotal = 0.0;
+    Double emissaoTotal = 0.0;
     Spinner spinner;
 
     @Override
@@ -85,11 +86,14 @@ public class CalcDiario extends AppCompatActivity{
                 distTotal = distTotal + distPontos;
                 textView8.setText(String.format("%.3f", distTotal)+" km");
                 if(spinner.getSelectedItem().equals("Carro")){
-                    textView.setText(String.format("%.3f", distTotal*190)+" g CO2");
+                    emissaoTotal = emissaoTotal + distPontos*190;
+                    textView.setText(String.format("%.3f", emissaoTotal)+" g CO2");
                 }else if(spinner.getSelectedItem().equals("Moto")){
-                    textView.setText(String.format("%.3f", distTotal*70)+" g CO2");
+                    emissaoTotal = emissaoTotal + distPontos*70;
+                    textView.setText(String.format("%.3f", emissaoTotal)+" g CO2");
                 }else{
-                    textView.setText(String.format("%.3f", distTotal*0)+" g CO2");
+                    emissaoTotal = emissaoTotal + distPontos*0;
+                    textView.setText(String.format("%.3f", emissaoTotal)+" g CO2");
                 }
 
 //                CharSequence text = location.getLatitude() + "";

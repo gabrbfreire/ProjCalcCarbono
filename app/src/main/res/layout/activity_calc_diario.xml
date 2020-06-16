@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/common_google_signin_btn_text_dark_focused"
-    tools:context=".CalcDiario">
+    tools:context=".CalcDiario"
+    android:elevation="10dp">
 
     <ScrollView
         android:layout_width="fill_parent"
@@ -17,10 +18,12 @@
         tools:layout_editor_absoluteX="0dp">
 
 
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@android:color/black">
+
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/ConstraintLayout1"
@@ -89,10 +92,8 @@
 
                 <ImageView
                     android:id="@+id/imageView"
-                    android:layout_width="254dp"
-                    android:layout_height="147dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginEnd="8dp"
+                    android:layout_width="265dp"
+                    android:layout_height="156dp"
                     android:scaleType="fitXY"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.486"
@@ -100,6 +101,7 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:srcCompat="@drawable/carros"
                     tools:srcCompat="@drawable/carros" />
+
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -141,5 +143,7 @@
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
